@@ -110,6 +110,7 @@ gameContainer.appendChild(topControls);
 let sequence = [];
 let playerSequence = [];
 let level = 0;
+playSoundArray=[];
 
 const zoo = ["dove", "rabbit", "monkey", "elephant"];
 
@@ -119,6 +120,7 @@ function startGame() {
   playerSequence = [];
   level = 0;
   nextLevel();
+  playSoundArray=[];
 }
 
 // Generate the next sequence
@@ -129,11 +131,44 @@ function nextLevel() {
   const nextAnimal = zoo[Math.floor(Math.random() * zoo.length)];
   sequence.push(nextAnimal);
   playSequence();
+  playSound(nextAnimal)
 }
+function playSound(animal){
+  const monkeyAud= document.createElement("audio");
+  monkeyAud.src="monkeyAud.wav";
+  monkeyAud.id="monkey"
+  
+  if(animal== monkeyAud.id){
+    monkeyAud.play()
+  }
+  const rabbitAud= document.createElement("audio");
+  rabbitAud.src="rabbitAud.wav";
+  rabbitAud.id="rabbit"
 
+  if(animal== rabbitAud.id){
+    rabbitAud.play()
+  }
+  const elephantAud= document.createElement("audio");
+  elephantAud.src="elephantAud.wav";
+  elephantAud.id="elephant"
+
+  if(animal== elephantAud.id){
+    elephantAud.play()
+  }
+  const birdAud= document.createElement("audio");
+  birdAud.src="birdAud.wav";
+  birdAud.id="dove"
+
+  if(animal== birdAud.id){
+    birdAud.play()
+  }
+playSoundArray.push(animal);
+console.log(playSoundArray);
+}
 // Play the current sequence
 function playSequence() {
   sequence.forEach((animal, index) => {
+    playSound();
     setTimeout(() => {
       flashAnimal(animal);
     }, (index + 1) * 1000);
@@ -144,6 +179,7 @@ function playSequence() {
 function flashAnimal(animal) {
   const button = document.getElementById(animal);
   button.style.animation = "ajillah 1s linear";
+  playSound();
   setTimeout(() => {
     button.style.animation = "none";
   }, 1000);
@@ -153,6 +189,7 @@ function flashAnimal(animal) {
 function handlePlayerInput(animal) {
   playerSequence.push(animal);
   flashAnimal(animal);
+  playSound();
   checkPlayerInput();
 }
 
